@@ -1,26 +1,43 @@
 import React, {useState} from 'react';
 
+
+
 export default function RomanNumeralComponent () {
+    
     const [calculatedAnswer, updateAnswer] = useState("Nulla");
-    const [input, updateInput] = useState("");
+    const [input, updateInput] = useState(" ");
 
 
     const addAndConvertToRomanNumerals = (ints) => {
         /* Implement me! */
-        return ints;
+        var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},roman = '',i;
+        for ( i in lookup ) {
+          while ( ints >= lookup[i] ) {
+            roman += i;
+            ints -= lookup[i];
+          }
+        }
+        return roman;
     }
+    addAndConvertToRomanNumerals(36);
 
     const addNumbers = (inputString) => {
         const numbersStringArray = inputString.split(",");
-        const numbers = numbersStringArray.map((numberAsString) => { return parseInt(numberAsString, 10) })
-
+        const numbers = numbersStringArray.map((numberAsString) => { return parseInt(numberAsString, 10) });
+        let sum = 0;
+     for (var i = 0; i < numbers.length; i++) {
+        sum += numbers[i]
+      }
+     
         /* numbers is an array of ints. E.g. [1, 2, 3] */
-        const answer = addAndConvertToRomanNumerals(numbers)
+        const answer = addAndConvertToRomanNumerals(sum)
 
         return answer;
     }
 
     const handleChange = (event) => {
+        
+        
         updateInput(event.target.value);
     }
 
@@ -29,6 +46,7 @@ export default function RomanNumeralComponent () {
         const answer = addNumbers(input);
         updateAnswer(answer);
     }
+
 
     return (
         <div>
@@ -39,7 +57,9 @@ export default function RomanNumeralComponent () {
                 </label>
                 <input type="submit" value="Add Numbers" />
             </form>
-            <div>Answer in Roman Numerals: {calculatedAnswer}</div>
+            <div>Answer in Roman Numerals: {calculatedAnswer}
+           
+            </div>
         </div>
     )
 }
